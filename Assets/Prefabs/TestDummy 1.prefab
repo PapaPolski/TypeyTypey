@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2133208941633209550, guid: 42eb415b90915fc4095fa84952eaee49, type: 3}
   isEnemyUnlocked: 1
+  speed: 3
 --- !u!61 &5363652429025779011
 BoxCollider2D:
   m_ObjectHideFlags: 0

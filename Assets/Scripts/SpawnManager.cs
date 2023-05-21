@@ -6,6 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject[] enemies;
     public float coolDownTime;
+    public Transform[] spawnLocations;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +35,15 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemy(float interval)
     {
-
-       // yield return new WaitUntil(() => { return GameManager.Instance.CurrentGameState == GameState.Playing; });
         while(GameManager.Instance.CurrentGameState != GameState.Playing) { yield return null; }
         
         yield return new WaitForSeconds(interval);
-        Vector3 enemySpawnLocation = new Vector3(Random.Range(-8f, 1.5f), 5.6f, 0f);
-        if(GameManager.Instance.CurrentGameState == GameState.Playing)
-            Instantiate(SelectEnemy(enemies), enemySpawnLocation, Quaternion.identity);
-        StartCoroutine(SpawnEnemy(coolDownTime));
+        int r;
+        Transform enemySpawnLocation = spawnLocations[(r = Random.Range(0, spawnLocations.Length))];
+        if (GameManager.Instance.CurrentGameState == GameState.Playing)
+        {
+            GameObject enemyToSpawn = Instantiate(SelectEnemy(enemies), enemySpawnLocation.position, Quaternion.identity);
+        }
+            StartCoroutine(SpawnEnemy(coolDownTime));
     }
 }

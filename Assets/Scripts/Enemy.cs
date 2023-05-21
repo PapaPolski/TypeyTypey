@@ -6,18 +6,32 @@ public class Enemy : MonoBehaviour
 {
 
     public GameObject bulletPrefab;
-    float maxHealth, currentHealth;
+    float maxHealth, currentHealth, timer;
     int scoreValue;
     public bool isEnemyUnlocked;
+    public float speed;
+    Vector3 directionOfMovement;
 
     // Start is called before the first frame update
     void Start()
     {
+        SetMovement();
         InvokeRepeating("FireBullet", 1f, 2f);
         maxHealth = 1;
         currentHealth = maxHealth;
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.Playing)
+        {
+            transform.position += directionOfMovement * Time.deltaTime * speed;
+
+            timer += Time.deltaTime;
+            if (timer > 6f)
+                Destroy(gameObject);
+        }
+    }
 
     void FireBullet()
     {
@@ -45,4 +59,20 @@ public class Enemy : MonoBehaviour
         GameManager.Instance.UpdateScore(scoreValue);
         Destroy(gameObject);
     }
+
+    public void SetMovement()
+    {
+        if(transform.position.x == -3)
+        {
+            directionOfMovement = Vector2.down;
+        }
+        else if(transform.position.x > -3) 
+        {
+            directionOfMovement = Vector2.left;
+        }
+        else if(transform.position.x < -3)
+        {
+            directionOfMovement = Vector2.right;
+        }
+    }    
 }
