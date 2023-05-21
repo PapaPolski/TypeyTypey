@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public GameObject bulletPrefab;
     float maxHealth, currentHealth;
     int scoreValue;
+    public bool isEnemyUnlocked;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +21,11 @@ public class Enemy : MonoBehaviour
 
     void FireBullet()
     {
-        Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
-        bulletPrefab.GetComponent<Projectile>().isPlayerBullet = false;
+        if (GameManager.Instance.CurrentGameState == GameState.Playing)
+        {
+            Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+            bulletPrefab.GetComponent<Projectile>().isPlayerBullet = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

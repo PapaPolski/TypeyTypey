@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject levelUpMenu;
 
+    public bool isStunned;
 
     private void Awake()
     {
@@ -63,12 +64,13 @@ public class GameManager : MonoBehaviour
         SetUpNextXPLevel();
         currentPlayerLevel = 1;
         levelUpMenu.SetActive(false);
+        isStunned = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (CurrentGameState == GameState.Playing)
+        if (CurrentGameState == GameState.Playing && !isStunned)
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {

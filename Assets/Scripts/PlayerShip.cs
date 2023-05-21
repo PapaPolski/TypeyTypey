@@ -13,7 +13,7 @@ public class PlayerShip : MonoBehaviour
 
 
     public GameObject bulletPrefab;
-    public float maxShieldAmount, currentShieldAmount, shieldDepletionRate;
+    public float maxShieldAmount, currentShieldAmount, shieldDepletionRate, shieldRechargeRate;
 
     public float currentHealth, maxHealth;
     public SpriteRenderer shield;
@@ -28,11 +28,11 @@ public class PlayerShip : MonoBehaviour
         maxShieldAmount = 100;
         maxHealth = 100;
         shieldSlider.maxValue = maxShieldAmount;
+        shieldRechargeRate = 0.25f;
 
         currentShieldAmount = maxShieldAmount;
         shieldSlider.value = currentShieldAmount;
         currentHealth = maxHealth;
-
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class PlayerShip : MonoBehaviour
 
     public void ChargeShield()
     {
-        currentShieldAmount += (maxShieldAmount * 0.25f);
+        currentShieldAmount += (maxShieldAmount * shieldRechargeRate);
         if (currentShieldAmount >= maxShieldAmount)
             currentShieldAmount = maxShieldAmount;
     }
